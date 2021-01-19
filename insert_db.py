@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """ Module where  we'll clean the db of old entries and upload new ones"""
 from dateutil.parser import parse
 import sqlite3
@@ -22,19 +21,9 @@ def get_rss():
     """Contains the code that defines the url of the rss, after we define what
        elements of the feed want."""
 
-    urls = ["https://news.ycombinator.com/rss",
-            "https://hackaday.com/blog/feed/",
-            "https://www.osnews.com/feed/",
-            "https://www.reddit.com/r/commandline/.rss",
-            "https://www.reddit.com/r/linux/.rss",
-            "https://www.reddit.com/r/europe/.rss",
-            "https://www.thegeekstuff.com/feed",
-            "https://rootsofprogress.org/feed.xml",
-            "http://rss.slashdot.org/Slashdot/slashdotLinux",
-            "https://slatestarcodex.com/feed/",
-            "https://www.lesswrong.com/feed.xml?view=curated-rss",
-            "https://feeds.feedburner.com/arstechnica/technology-lab",
-            "https://hackernoon.com/feed"]
+    # 6
+    with open('url_list.txt') as f:
+        urls = f.read().splitlines()
 
     index = 0
 
@@ -69,10 +58,31 @@ def get_rss():
                         pass
                     except AttributeError:
                         pass
+                    try:
+                        fp.entries[index].pubDate
+                        publi = fp.entries[index].pubDate
+                        publi = str(publi)
+                        pub = parse(publi)
+                        tempo = pub.strftime('%y/%m/%d')
+                    except KeyError:
+                        pass
+                    except AttributeError:
+                        pass
                 except AttributeError:
                     try:
                         fp.entries[index].updated
                         publi = fp.entries[index].updated
+                        publi = str(publi)
+                        pub = parse(publi)
+                        tempo = pub.strftime('%y/%m/%d')
+                    except KeyError:
+                        pass
+                    except AttributeError:
+                        pass
+                    try:
+                        # 6
+                        fp.entries[index].pubDate
+                        publi = fp.entries[index].pubDate
                         publi = str(publi)
                         pub = parse(publi)
                         tempo = pub.strftime('%y/%m/%d')
@@ -110,4 +120,7 @@ https://stackoverflow.com/questions/2265357/parse-date-string-and-change-format
 
 5) - As the Reddit rss' don't have a published element, but have a updated one,
 there was a need to create another if-exception block, so he could look on both
+
+6) - How to read a file into a list.
+See https://bit.ly/38TxQ4y
 """
