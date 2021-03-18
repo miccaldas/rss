@@ -6,7 +6,7 @@ source = ''
 
 
 def sources(source):
-    """Getting its query from main, the function calls the db, and asks for rss_fts
+    """Getting its query from rss.py, the function calls the db, and asks for rss_fts
        table, which has free text search enabled."""
     with sqlite3.connect('rss.db') as db:
         cur = db.cursor()
