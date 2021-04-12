@@ -8,6 +8,7 @@ from sources_search import sources
 from append_rss import append_rss
 from insert_db import delete_old, get_rss
 from delete_rss import read_rss, delete_rss
+from shuffle import shuffle
 
 
 def rss():
@@ -31,6 +32,7 @@ def rss():
                 'Search the db',
                 'Refresh db',
                 'See db',
+                'Shuffle db',
                 '--------------------',
                 'Exit',
                 ],
@@ -77,6 +79,8 @@ def rss():
         get_rss()
     if answer == 'See db':
         show_rss()
+    if answer == 'Shuffle db':
+        shuffle()
     if answer == 'Exit':
         sys.exit()
 
