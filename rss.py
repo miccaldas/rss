@@ -17,7 +17,7 @@ def rss():
         choices=[
                 'See Hacker News',
                 'See OSNews',
-                'See Reddit Commandline',
+                'See Reddit Commandline ',
                 'See Reddit Linux',
                 'See Reddit Europe',
                 'See The Geek Stuff',
