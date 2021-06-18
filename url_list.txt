@@ -10,4 +10,4 @@ https://slatestarcodex.com/feed/
 https://www.lesswrong.com/feed.xml?view=curated-rss
 https://feeds.feedburner.com/arstechnica/technology-lab
 https://www.ostechnix.com/feed/
-https://rsshub.app/aeon/ideas
+
