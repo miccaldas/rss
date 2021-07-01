@@ -1,16 +1,20 @@
 """ Module where  we'll clean the db of old entries and upload new ones"""
 from dateutil.parser import parse
-import sqlite3
+from mysql.connector import connect, Error
 import feedparser
 
 
 def delete_old():
-    """Opens a sqlite3 connection and erases all entries in the table 'rss'"""
-    with sqlite3.connect('rss.db') as db:
-        cur = db.cursor()
-        inserir = 'DELETE FROM rss;'
-        cur.execute(inserir,),
-        db.commit()
+    """Opens a connection and erases all entries in the table 'rss'"""
+    conn = connect(
+        host="localhost",
+        user="mic",
+        password="xxxx",
+        database="rss")
+    cur = conn.cursor()
+    inserir = 'DELETE FROM rss;'
+    cur.execute(inserir,),
+    conn.commit()
 
 
 if __name__ == "__main__":
@@ -27,16 +31,18 @@ def get_rss():
 
     index = 0
 
-    with sqlite3.connect('rss.db') as db:
-        cur = db.cursor()
-        # 1
+    try:
+        conn = connect(
+            host="localhost",
+            user="mic",
+            password="xxxx",
+            database="rss")
+        cur = conn.cursor()   # 1
         for url in urls:
             fp = feedparser.parse(url)
             nome = fp['feed']['title']
-            print(nome)
-        # 2
-            for index in range(len(fp.entries)):
-                # 3 # 4
+            print(nome)  # 2
+            for index in range(len(fp.entries)):   # 3 # 4
                 try:
                     titulo = fp.entries[index].title
                     titulo = str(titulo)
@@ -90,10 +96,14 @@ def get_rss():
                         pass
                     except AttributeError:
                         pass
-
-                inserir = 'INSERT INTO rss (name, title, link, date) VALUES (?, ?, ? , ?)'
+                inserir = 'INSERT INTO rss (name, title, link, date) VALUES (%s, %s, %s, %s)'
                 cur.execute(inserir, (nome, titulo, linque, tempo)),
-                db.commit()
+                conn.commit()
+    except Error as e:
+        print("Error while connecting to db", e)
+    finally:
+        if(conn):
+            conn.close()
 
 
 if __name__ == "__main__":
