@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """ Module where  we'll clean the db of old entries and upload new ones"""
 from dateutil.parser import parse
 from mysql.connector import connect, Error
@@ -26,7 +27,7 @@ def get_rss():
        elements of the feed want."""
 
     # 6
-    with open('url_list.txt') as f:
+    with open('/home/mic/python/rss/url_list.txt') as f:
         urls = f.read().splitlines()
 
     index = 0
@@ -104,6 +105,7 @@ def get_rss():
     finally:
         if(conn):
             conn.close()
+    print('Databse Updated')
 
 
 if __name__ == "__main__":
