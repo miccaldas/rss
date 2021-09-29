@@ -12,54 +12,57 @@ from shuffle import shuffle
 
 def rss():
     question = questionary.select(
-        'What do you want to do?',
+        "What do you want to do?",
         choices=[
-                'See Hacker News',
-                'See Reddit Commandline ',
-                'See Reddit Linux',
-                'See Reddit Europe',
-                'See Slashdot',
-                'See Ars Technica',
-                '--------------------',
-                'Add a feed',
-                'Delete a feed',
-                'Search the db',
-                'Refresh db',
-                'See db',
-                'Shuffle db',
-                '--------------------',
-                'Exit',
-                ],
+            "See Hacker News",
+            "See Reddit Commandline ",
+            "See Reddit Linux",
+            "See Reddit Europe",
+            "See Slashdot",
+            "See Ars Technica",
+            "See Quanta Magazine",
+            "--------------------",
+            "Add a feed",
+            "Delete a feed",
+            "Search the db",
+            "Refresh db",
+            "See db",
+            "Shuffle db",
+            "--------------------",
+            "Exit",
+        ],
     )
     answer = question.ask()
     print(answer)
 
-    if answer == 'See Hacker News':
+    if answer == "See Hacker News":
         # 1
-        sources('Hacker News')
-    if answer == 'See Reddit Commandline':
-        sources('Command Line')
-    if answer == 'See Reddit Linux':
-        sources('linux')
-    if answer == 'See Reddit Europe':
-        sources('europe')
-    if answer == 'See Ars Technica':
-        sources('Biz & IT – Ars Technica')
-    if answer == 'See Slashdot':
-        sources('Slashdot: Linux')
-    if answer == ('Delete a feed'):
+        sources("Hacker News")
+    if answer == "See Reddit Commandline":
+        sources("Command Line")
+    if answer == "See Reddit Linux":
+        sources("linux")
+    if answer == "See Reddit Europe":
+        sources("europe")
+    if answer == "See Ars Technica":
+        sources("Biz & IT – Ars Technica")
+    if answer == "See Slashdot":
+        sources("Slashdot: Linux")
+    if answer == "Quanta Magazine":
+        sources("Quanta Magazine")
+    if answer == ("Delete a feed"):
         read_rss()
         delete_rss()
-    if answer == 'Search the db':
+    if answer == "Search the db":
         search()
-    if answer == 'Refresh db':
+    if answer == "Refresh db":
         delete_old()
         get_rss()
-    if answer == 'See db':
+    if answer == "See db":
         show_rss()
-    if answer == 'Shuffle db':
+    if answer == "Shuffle db":
         shuffle()
-    if answer == 'Exit':
+    if answer == "Exit":
         sys.exit()
 
 

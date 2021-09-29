@@ -4,3 +4,4 @@ https://www.reddit.com/r/linux.rss
 https://www.reddit.com/r/europe.rss
 http://rss.slashdot.org/Slashdot/slashdotLinux
 https://feeds.feedburner.com/arstechnica/technology-lab
+https://api.quantamagazine.org/feed

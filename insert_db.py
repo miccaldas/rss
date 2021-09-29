@@ -7,14 +7,12 @@ import feedparser
 
 def delete_old():
     """Opens a connection and erases all entries in the table 'rss'"""
-    conn = connect(
-        host="localhost",
-        user="mic",
-        password="xxxx",
-        database="rss")
+    conn = connect(host="localhost", user="mic", password="xxxx", database="rss")
     cur = conn.cursor()
-    inserir = 'DELETE FROM rss;'
-    cur.execute(inserir,),
+    inserir = "DELETE FROM rss;"
+    cur.execute(
+        inserir,
+    ),
     conn.commit()
 
 
@@ -24,26 +22,22 @@ if __name__ == "__main__":
 
 def get_rss():
     """Contains the code that defines the url of the rss, after we define what
-       elements of the feed want."""
+    elements of the feed want."""
 
     # 6
-    with open('/home/mic/python/rss/url_list.txt') as f:
+    with open("/home/mic/python/rss/url_list.txt") as f:
         urls = f.read().splitlines()
 
     index = 0
 
     try:
-        conn = connect(
-            host="localhost",
-            user="mic",
-            password="xxxx",
-            database="rss")
-        cur = conn.cursor()   # 1
+        conn = connect(host="localhost", user="mic", password="xxxx", database="rss")
+        cur = conn.cursor()  # 1
         for url in urls:
             fp = feedparser.parse(url)
-            nome = fp['feed']['title']
+            nome = fp["feed"]["title"]
             print(nome)  # 2
-            for index in range(len(fp.entries)):   # 3 # 4
+            for index in range(len(fp.entries)):  # 3 # 4
                 try:
                     titulo = fp.entries[index].title
                     titulo = str(titulo)
@@ -52,7 +46,7 @@ def get_rss():
                     publi = fp.entries[index].published
                     publi = str(publi)
                     pub = parse(publi)
-                    tempo = pub.strftime('%y/%m/%d')
+                    tempo = pub.strftime("%y/%m/%d")
                 except KeyError:
                     try:
                         # 5
@@ -60,7 +54,7 @@ def get_rss():
                         publi = fp.entries[index].updated
                         publi = str(publi)
                         pub = parse(publi)
-                        tempo = pub.strftime('%y/%m/%d')
+                        tempo = pub.strftime("%y/%m/%d")
                     except KeyError:
                         pass
                     except AttributeError:
@@ -70,7 +64,7 @@ def get_rss():
                         publi = fp.entries[index].pubDate
                         publi = str(publi)
                         pub = parse(publi)
-                        tempo = pub.strftime('%y/%m/%d')
+                        tempo = pub.strftime("%y/%m/%d")
                     except KeyError:
                         pass
                     except AttributeError:
@@ -81,7 +75,7 @@ def get_rss():
                         publi = fp.entries[index].updated
                         publi = str(publi)
                         pub = parse(publi)
-                        tempo = pub.strftime('%y/%m/%d')
+                        tempo = pub.strftime("%y/%m/%d")
                     except KeyError:
                         pass
                     except AttributeError:
@@ -92,20 +86,20 @@ def get_rss():
                         publi = fp.entries[index].pubDate
                         publi = str(publi)
                         pub = parse(publi)
-                        tempo = pub.strftime('%y/%m/%d')
+                        tempo = pub.strftime("%y/%m/%d")
                     except KeyError:
                         pass
                     except AttributeError:
                         pass
-                inserir = 'INSERT INTO rss (name, title, link, date) VALUES (%s, %s, %s, %s)'
+                inserir = "INSERT INTO rss (name, title, link, date) VALUES (%s, %s, %s, %s)"
                 cur.execute(inserir, (nome, titulo, linque, tempo)),
                 conn.commit()
     except Error as e:
         print("Error while connecting to db", e)
     finally:
-        if(conn):
+        if conn:
             conn.close()
-    print('Databse Updated')
+    print("Databse Updated")
 
 
 if __name__ == "__main__":
