@@ -1,35 +1,40 @@
 """This moodule is concerned with all searches to be done in db, that are defined by the user"""
-from mysql.connector import connect, Error
 import click
+from mysql.connector import Error, connect
+from rich import print
+from rich.console import Console
 
 
 def search():
     """Here we query the user about what he's looking for,
-        and make a request for the fts table, as it is
-        this table that has enabled the free text search"""
-    query = input(click.style("What's your query? ", fg='bright_white', bold=True))
+    and make a request for the fts table, as it is
+    this table that has enabled the free text search"""
+    console = Console()
+    query = input(click.style("What's your query? ", fg="bright_white", bold=True))
     try:
-        conn = connect(
-            host="localhost",
-            user="mic",
-            password="xxxx",
-            database="rss")
+        conn = connect(host="localhost", user="mic", password="xxxx", database="rss")
         cur = conn.cursor()
-        expression = 'SELECT id, name, title, link, date FROM rss WHERE MATCH(name, title) AGAINST (%s)'
+        expression = "SELECT id, name, title, link, date FROM rss WHERE MATCH(name, title) AGAINST (%s)"
         cur.execute(expression, (query,))
         record = cur.fetchall()
         for row in record:
-            print(click.style('都', fg='bright_magenta', bold=True),
-                  (click.style(str(row[1]), fg='bright_magenta', bold=True)))
-            print(click.style('都', fg='bright_magenta', bold=True),
-                  (click.style(str(row[2]), fg='bright_blue', bold=True)))
-            print(click.style('都', fg='bright_magenta', bold=True),
-                  (click.style(str(row[3]), fg='bright_white', bold=True)))
-            print('\n')
+            id = row[0]  # noqa: F841
+            name = row[1].upper()  # noqa: F841
+            title = row[2]  # noqa: F841
+            link = row[3]  # noqa: F841
+            date = row[4]  # noqa: F841
+            print(f"[bold #eac784] <+ {id} +>[/bold #eac784]")
+            print(f"[bold #a39193] @ {name}[/bold #a39193]")
+            print(f"[bold #eea990] @ {title}[/bold #eea990]")
+            print(f"[bold #eea990] @ {date}[bold, #eea990]")
+            print(f"[bold #ff6700] @ {link}[bold #ff6700]")
+            print("\n")
+            console.rule("[bold #66545e][+ + + +]")
+            print("\n")
     except Error as e:
         print("Error while connecting to db", e)
     finally:
-        if(conn):
+        if conn:
             conn.close()
 
 

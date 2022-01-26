@@ -25,7 +25,7 @@ def get_rss():
     elements of the feed want."""
 
     # 6
-    with open("/home/mic/python/rss/url_list.txt") as f:
+    with open("/home/mic/python/rss/rss/url_list.txt") as f:
         urls = f.read().splitlines()
 
     index = 0
