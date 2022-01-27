@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 """ Module where  we'll clean the db of old entries and upload new ones"""
-from dateutil.parser import parse
-from mysql.connector import connect, Error
 import feedparser
+import mysql.connector as mc
+import snoop
+from dateutil.parser import parse
+from mysql.connector import Error, connect
 
 
+@snoop
 def delete_old():
     """Opens a connection and erases all entries in the table 'rss'"""
     conn = connect(host="localhost", user="mic", password="xxxx", database="rss")
@@ -20,6 +23,7 @@ if __name__ == "__main__":
     delete_old()
 
 
+@snoop
 def get_rss():
     """Contains the code that defines the url of the rss, after we define what
     elements of the feed want."""
@@ -58,6 +62,8 @@ def get_rss():
                     except KeyError:
                         pass
                     except AttributeError:
+                        pass
+                    except mc.DataError:
                         pass
                     try:
                         fp.entries[index].pubDate

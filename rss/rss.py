@@ -19,8 +19,9 @@ def rss():
             "See Reddit Linux",
             "See Reddit Europe",
             "See Slashdot",
-            "See Ars Technica",
+            "See Linux Journal",
             "See Quanta Magazine",
+            "See Lobsters",
             "--------------------",
             "Add a feed",
             "Delete a feed",
@@ -45,11 +46,13 @@ def rss():
     if answer == "See Reddit Europe":
         sources("europe")
     if answer == "See Ars Technica":
-        sources("Biz & IT – Ars Technica")
+        sources("Linux Journal")
     if answer == "See Slashdot":
         sources("Slashdot: Linux")
     if answer == "Quanta Magazine":
         sources("Quanta Magazine")
+    if answer == ("Lobsters"):
+        sources("Lobsters")
     if answer == ("Delete a feed"):
         read_rss()
         delete_rss()
