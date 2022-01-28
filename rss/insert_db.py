@@ -50,7 +50,7 @@ def get_rss():
                     publi = fp.entries[index].published
                     publi = str(publi)
                     pub = parse(publi)
-                    tempo = pub.strftime("%y/%m/%d")
+                    tempo = pub.strftime("%d/%m/%y")
                 except KeyError:
                     try:
                         # 5
