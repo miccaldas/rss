@@ -12,7 +12,7 @@ def show_rss():
     try:
         conn = connect(host="localhost", user="mic", password="xxxx", database="rss")
         cur = conn.cursor()
-        cur.execute("SELECT * FROM rss ORDER BY date ASC")  # 1
+        cur.execute("SELECT * FROM rss ORDER BY date ASC")
         rows = cur.fetchall()
         for row in rows:
             id = row[0]  # noqa: F841
@@ -38,9 +38,3 @@ def show_rss():
 
 if __name__ == "__main__":
     show_rss()
-
-
-"""
-NOTES:
-1) - https://stackoverflow.com/questions/15234150/order-by-not-formatted-date-sqlite?rq=1
-"""

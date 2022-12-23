@@ -6,9 +6,7 @@ from rich.console import Console
 
 
 def search():
-    """Here we query the user about what he's looking for,
-    and make a request for the fts table, as it is
-    this table that has enabled the free text search"""
+    """Here we query the user about what he's looking for."""
     console = Console()
     query = input(click.style("What's your query? ", fg="bright_white", bold=True))
     try:

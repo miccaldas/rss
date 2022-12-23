@@ -1,13 +1,18 @@
 """Here we concentrate all functionality of the app"""
 from __future__ import unicode_literals
+
 import sys
+
+import isort
 import questionary
+
+from delete_rss import delete_rss, read_rss
+from insert_db import delete_old, get_rss
 from search_db import search
 from show_rss import show_rss
-from sources_search import sources
-from insert_db import delete_old, get_rss
-from delete_rss import read_rss, delete_rss
 from shuffle import shuffle
+from sources_search import sources
+from view_starred import view_starred
 
 
 def rss():
@@ -29,12 +34,12 @@ def rss():
             "Refresh db",
             "See db",
             "Shuffle db",
+            "View Starred",
             "--------------------",
             "Exit",
         ],
     )
     answer = question.ask()
-    print(answer)
 
     if answer == "See Hacker News":
         # 1
@@ -51,9 +56,9 @@ def rss():
         sources("Slashdot: Linux")
     if answer == "Quanta Magazine":
         sources("Quanta Magazine")
-    if answer == ("Lobsters"):
+    if answer == "Lobsters":
         sources("Lobsters")
-    if answer == ("Delete a feed"):
+    if answer == "Delete a feed":
         read_rss()
         delete_rss()
     if answer == "Search the db":
@@ -65,6 +70,8 @@ def rss():
         show_rss()
     if answer == "Shuffle db":
         shuffle()
+    if answer == "View Starred":
+        view_starred()
     if answer == "Exit":
         sys.exit()
 

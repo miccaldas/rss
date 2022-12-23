@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 """ Module where  we'll clean the db of old entries and upload new ones"""
+import subprocess
+
 import feedparser
+import isort  # noqa: F401
 import mysql.connector as mc
 import snoop
 from dateutil.parser import parse
 from mysql.connector import Error, connect
+
+subprocess.run(["isort", __file__])
 
 
 @snoop
