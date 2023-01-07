@@ -120,7 +120,12 @@ if __name__ == "__main__":
 NOTES:
 1) - First we initialize the connection and the cursor. We then define the variable
 name as the title of the feed attribute. This is done so we can get the name of
-the publication.
+the publication.@bp.route("/login", methods=("GET", "POST"))
+@snoop
+def login():
+    """
+    Same pattern as before but for login.
+    """
 
 2) - Then we say that for each publication feed url in list 'urls', it should be
 created a feedparser object.
