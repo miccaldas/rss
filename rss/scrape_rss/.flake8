@@ -1,9 +1,0 @@
-[flake8]
-ignore = E121, E123, E126, E226, E24, E704, E501, W503, W504, W291, W293, F401, E272, F841, E722, E501
-max-line-length = 180
-exclude = .git,__pycache__,docs/source/conf.py,old,build,dist
-verbose = 2
-show-source = True
-per-file-ignores = ~/python/bsoup/scrap.py: E501 
-
-
