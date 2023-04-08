@@ -1,0 +1,40 @@
+    term = Terminal()
+    yc = feedparser.parse("https://news.ycombinator.com/rss")
+    lb = feedparser.parse("https://lobste.rs/rss")
+
+    feeds = [yc, lb]
+
+    for fd in feeds:
+        if fd == lb:
+            pub = term.bold_on_wheat_burlywood4(fd.feed.title)
+        else:
+            pub = (
+                term.bold
+                + term.on_color_rgb(203, 228, 222)
+                + term.color_rgb(44, 51, 51)
+                + fd.feed.title
+                + term.normal
+            )
+        for entry in fd.entries:
+            t = entry.title
+            g = entry.link
+            # https://tinyurl.com/y79uagyf
+            p = str(datetime.fromtimestamp(mktime(entry.published_parsed)))
+
+            if fd == yc:
+                lnk = term.link(g, f"{term.color_rgb(87, 197, 182)}{term.bold}{t}")
+                tm = f"{term.color_rgb(203, 228, 222)}{term.bold}{p}"
+            else:
+                lnk = term.link(g, f"{term.color_rgb(250, 152, 132)}{term.bold}{t}")
+                tm = term.bold_bisque2(p)
+
+            ents = (
+                pub,
+                lnk,
+                tm,
+            )
+            for line in ents:
+                print("".join(term.wrap(line, width=290, initial_indent=" " * 30)))
+            print(" ")
+
+
