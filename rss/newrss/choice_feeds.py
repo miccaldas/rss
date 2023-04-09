@@ -1,5 +1,5 @@
 """
-
+Updates, chooses and collects feed data, asked by the user.
 """
 from __future__ import unicode_literals
 
@@ -7,16 +7,18 @@ import sqlite3
 import subprocess
 
 import questionary
-import snoop
+
+# import snoop
 from questionary import Separator, Style
-from snoop import pp
+
+# from snoop import pp
 
 
-def type_watch(source, value):
-    return "type({})".format(source), type(value)
+# def type_watch(source, value):
+#     return "type({})".format(source), type(value)
 
 
-snoop.install(watch_extras=[type_watch])
+# snoop.install(watch_extras=[type_watch])
 
 custom_style_monitor = Style(
     [
@@ -50,6 +52,7 @@ def update_query():
         subprocess.run(cmd, shell=True)
 
 
+# @snoop
 def choose_feeds():
     """
     Selects entries in the *name* column and displays the results.
@@ -74,7 +77,7 @@ def choose_feeds():
             conn.close()
 
     recs = [i for g in records for i in g]
-    recs += ["All", "Exit"]
+    recs += ["All", "-----------------------", "Exit"]
 
     feedchoice = questionary.checkbox(
         message="What feeds do you want to see?",
@@ -88,13 +91,13 @@ def choose_feeds():
     return feedchoice
 
 
-@snoop
+# @snoop
 def get_feeds():
     """
     Gets the feed information for the publications chosen
     in the last function. It has different queries in case
     its various feeds, one feed, all feeds.\n
-    .. code-choice::
+    .. code-choice:: sql
 
         SELECT * FROM rss WHERE name IN <choices> ORDER BY RANDOM
         SELECT * FROM rss WHERE name = '{choices[0]}'
@@ -102,7 +105,7 @@ def get_feeds():
 
     :returns: records
     """
-
+    update_query()
     chcs = choose_feeds()
     choices = tuple(chcs)
 
@@ -111,22 +114,29 @@ def get_feeds():
         conn = sqlite3.connect("rss.db")
         cur = conn.cursor()
         if choices[0] == "All":
-            query = "SELECT name, link, time FROM rss"
+            query = "SELECT name, title, link, time FROM rss"
             cur.execute(query)
         if choices[0] == "Exit":
-            raise SystemExit
+            # Python was throwing an error whenever 'Exit' was used. This silences it.
+            try:
+                raise SystemExit
+            except SystemExit:
+                print(" ")
         if len(choices) > 1:
-            query = f"SELECT name, link, time FROM rss WHERE name IN {choices} ORDER BY RANDOM()"
+            query = f"SELECT name, title, link, time FROM rss WHERE name IN {choices} ORDER BY RANDOM()"
             cur.execute(query)
         if len(choices) == 1:
-            if choices[0] != "All" or "Exit":
-                query = f"SELECT name, link, time FROM rss WHERE name = '{choices[0]}'"
+            if choices[0] not in ["All", "Exit"]:
+                query = f"SELECT name, title, link, time FROM rss WHERE name = '{choices[0]}'"
                 cur.execute(query)
-        recs = cur.fetchall()
-        records = [i for g in recs for i in g]
+        records = cur.fetchall()
     except sqlite3.Error as e:
         print("Error connecting to the db", e)
     finally:
         if conn:
             conn.close()
         return records
+
+
+if __name__ == "__main__":
+    get_feeds()

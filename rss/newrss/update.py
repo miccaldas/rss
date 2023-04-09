@@ -3,6 +3,7 @@ Module that deletes the database before updating it.
 We keep only the latest results in storage.
 """
 import multiprocessing
+import pickle
 import sqlite3
 from datetime import datetime
 from multiprocessing import Pool
@@ -13,6 +14,7 @@ import feedparser
 # import snoop
 # from snoop import pp
 
+
 # def type_watch(source, value):
 #     return "type({})".format(source), type(value)
 
@@ -20,6 +22,7 @@ import feedparser
 # snoop.install(watch_extras=[type_watch])
 
 
+# @snoop
 def delete_entries():
     """
     Deletes all entries in the database. We only care about the
@@ -46,6 +49,7 @@ if __name__ == "__main__":
     delete_entries()
 
 
+# @snoop
 def upload_feed(answers):
     """
     Parses all feeds and uploads them to the database.
@@ -70,18 +74,13 @@ def upload_feed(answers):
 
 
 if __name__ == "__main__":
-    feeds = [
-        "https://news.ycombinator.com/rss",
-        "https://www.reddit.com/r/commandline.rss",
-        "https://www.reddit.com/r/linux.rss",
-        "https://www.reddit.com/r/europe.rss",
-        "https://api.quantamagazine.org/feed",
-        "https://lobste.rs/rss",
-    ]
+    with open("feedlst.bin", "rb") as v:
+        feeds = pickle.load(v)
     answers = []
-    for url in feeds:
-        fs = feedparser.parse(url)
+    for feed in feeds:
+        fs = feedparser.parse(feed[1])
         name = fs.feed.title
+        print(name)
         for entry in fs.entries:
             title = entry.title
             link = entry.link
