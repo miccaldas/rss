@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rss.show_feeds &#8212; RSS 6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mrtools.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+<div class="pageheader">
+  <ul>
+    <!-- <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../usage/installation.html">Get it</a></li>
+    <li><a href="../../contents.html">Docs</a></li>
+    <li><a href="../../develop.html">Extend/Develop</a></li> -->
+  </ul>
+  <div>
+    
+    <h1 class="logo"><a href="../../index.html">RSS</a></h1>
+    
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RSS 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rss.show_feeds</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for rss.show_feeds</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module to decorate the feed data and present it.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># import snoop</span>
+<span class="kn">from</span> <span class="nn">blessed</span> <span class="kn">import</span> <span class="n">Terminal</span>
+
+<span class="kn">from</span> <span class="nn">rss.choice_feeds</span> <span class="kn">import</span> <span class="n">get_feeds</span>
+
+<span class="c1"># from snoop import pp</span>
+
+
+<span class="c1"># def type_watch(source, value):</span>
+<span class="c1">#     return &quot;type({})&quot;.format(source), type(value)</span>
+
+<span class="c1"># snoop.install(watch_extras=[type_watch])</span>
+
+
+<div class="viewcode-block" id="DecorateShowFeeds"><a class="viewcode-back" href="../../modules.html#rss.show_feeds.DecorateShowFeeds">[docs]</a><span class="k">class</span> <span class="nc">DecorateShowFeeds</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    1.  Imports the data of chosen feeds.</span>
+<span class="sd">    2.  Defines color pallettes to decorate each feed.</span>
+<span class="sd">    3.  Alocates a pallette to a feed.</span>
+<span class="sd">    4.  Shows feeds in terminal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># @snoop</span>
+<div class="viewcode-block" id="DecorateShowFeeds.records"><a class="viewcode-back" href="../../modules.html#rss.show_feeds.DecorateShowFeeds.records">[docs]</a>    <span class="k">def</span> <span class="nf">records</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs *get_feeds* module to ask the user what information he wants to see.\n</span>
+<span class="sd">        As *get_feeds* uses multiprocessing, it can&#39;t be imported traditioanlly, so</span>
+<span class="sd">        we call it, through *subprocess*, with a *python* command.\n</span>
+<span class="sd">        :command: python get_feeds.py</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">records</span> <span class="o">=</span> <span class="n">get_feeds</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DecorateShowFeeds.pallettes"><a class="viewcode-back" href="../../modules.html#rss.show_feeds.DecorateShowFeeds.pallettes">[docs]</a>    <span class="k">def</span> <span class="nf">pallettes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Color pallettes to be atributed randomly to each chosen feed.</span>
+<span class="sd">        Creates a list of pallettes that&#39;ll be used in the next method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orange</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">199</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">brown_green</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">171</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">170</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">103</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">171</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">170</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">171</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">170</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pink</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">228</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">147</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">83</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">228</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">147</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">228</span><span class="p">,</span> <span class="mi">147</span><span class="p">,</span> <span class="mi">147</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acid_lemon</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">62</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">139</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">230</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aquamarine</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">173</span><span class="p">,</span> <span class="mi">181</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">238</span><span class="p">,</span> <span class="mi">238</span><span class="p">,</span> <span class="mi">238</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">173</span><span class="p">,</span> <span class="mi">181</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">173</span><span class="p">,</span> <span class="mi">181</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toasted_yellow</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">105</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">74</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">58</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">105</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">105</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">softgreens</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">66</span><span class="p">,</span> <span class="mi">133</span><span class="p">,</span> <span class="mi">91</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">159</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">159</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">159</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lightblue</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">210</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">247</span><span class="p">,</span> <span class="mi">245</span><span class="p">,</span> <span class="mi">235</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">210</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">210</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grey</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">104</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">243</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">161</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">243</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">161</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">243</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">161</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">brown</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bkgrd&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">202</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span> <span class="mi">171</span><span class="p">),</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">75</span><span class="p">),</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">202</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span> <span class="mi">171</span><span class="p">),</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">202</span><span class="p">,</span> <span class="mi">191</span><span class="p">,</span> <span class="mi">171</span><span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pallette_lst</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">orange</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">brown_green</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pink</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">acid_lemon</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aquamarine</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">toasted_yellow</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">softgreens</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lightblue</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grey</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">brown</span><span class="p">,</span>
+        <span class="p">]</span></div>
+
+    <span class="c1"># @snoop</span>
+<div class="viewcode-block" id="DecorateShowFeeds.name_to_pallette"><a class="viewcode-back" href="../../modules.html#rss.show_feeds.DecorateShowFeeds.name_to_pallette">[docs]</a>    <span class="k">def</span> <span class="nf">name_to_pallette</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a list of tuples with a chosen feed name and a pallette.\n</span>
+<span class="sd">        We want different pallettes for each publication. For this we need to ensure</span>
+<span class="sd">        that, everytime that &#39;random&#39; chooses a new pallette, there is only unused</span>
+<span class="sd">        pallettes as options. To do this, we pop the used options out of the list of</span>
+<span class="sd">        choices. It creates a *self.name_pallette* list, with tuples with the feed</span>
+<span class="sd">        name and the its pallette.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rawnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">records</span><span class="p">]</span>
+        <span class="n">nms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">rawnames</span><span class="p">)</span>
+        <span class="c1"># We&#39;ll need, further along, to choose a name by index. That is not possible</span>
+        <span class="c1"># in a set. So we need to turn it into a list.</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_pallette</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># This is the list that&#39;ll have its elements popped.</span>
+        <span class="n">chosen_pallettes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pallette_lst</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)):</span>
+            <span class="c1"># Pallette choice.</span>
+            <span class="n">plt</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">chosen_pallettes</span><span class="p">)</span>
+            <span class="c1"># Append tuple with name of feed and its pallette.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_pallette</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">plt</span><span class="p">))</span>
+            <span class="c1"># Get index of pallette in &#39;chosen_pallettes&#39;.</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">chosen_pallettes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+            <span class="c1"># Remove it from list.</span>
+            <span class="n">chosen_pallettes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span></div>
+
+    <span class="c1"># @snoop</span>
+    <span class="k">def</span> <span class="nf">show_feeds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alocates pallette values to the feed content, using *Blessed* terminology.</span>
+<span class="sd">        Shows the results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">Terminal</span><span class="p">()</span>
+        <span class="n">decoratedentries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">records</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_pallette</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">pub</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">term</span><span class="o">.</span><span class="n">bold</span>
+                        <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">on_color_rgb</span><span class="p">(</span>
+                            <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;bkgrd&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;bkgrd&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;bkgrd&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="p">)</span>
+                        <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">color_rgb</span><span class="p">(</span>
+                            <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="p">)</span>
+                        <span class="o">+</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">normal</span>
+                    <span class="p">)</span>
+                    <span class="n">ttl</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">term</span><span class="o">.</span><span class="n">color_rgb</span><span class="p">(</span>
+                            <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;title&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;title&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;title&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="p">)</span>
+                        <span class="o">+</span> <span class="n">term</span><span class="o">.</span><span class="n">bold</span>
+                        <span class="o">+</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="n">title</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">term</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">ttl</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+                    <span class="n">time</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">term</span><span class="o">.</span><span class="n">color_rgb</span><span class="p">(</span>
+                            <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;time&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="p">)</span>
+                        <span class="o">+</span> <span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="n">decoratedentries</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pub</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">time</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">decoratedentries</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">initial_indent</span><span class="o">=</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RSS 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rss.show_feeds</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, mclds.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+    </div>
+  </body>
+</html>

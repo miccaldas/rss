@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Modules &#8212; RSS 6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mrtools.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/micromodal.css" />
+    <script src="_static/jquery.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/hoverxref.js"></script>
+    <script src="_static/js/tooltipster.bundle.min.js"></script>
+    <script src="_static/js/micromodal.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="RSS Documentation." href="index.html" /> 
+  </head><body>
+<div class="pageheader">
+  <ul>
+    <!-- <li><a href="index.html">Home</a></li>
+    <li><a href="usage/installation.html">Get it</a></li>
+    <li><a href="contents.html">Docs</a></li>
+    <li><a href="develop.html">Extend/Develop</a></li> -->
+  </ul>
+  <div>
+    
+    <h1 class="logo"><a href="index.html">RSS</a></h1>
+    
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="RSS Documentation."
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RSS 6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Modules</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p>For this update, there was a desire to simplify processes, and minimize the proliferation of modules. This means, as long as it makes makes sense, to have one module per functionality. Meaning: one module for deleting, another for adding and so on and so forth. But here I broke this rule with the <em>choice_feeds.py</em> module, It gets and treats all the feeds information. This, in principle, should be aggregated with the <em>show_feeds.py</em> module, but the truth is that there is a lot of user input regarding what feeds are used and when. Also these user choices have to be treated differently, as per the question or the answers. Taking into account the complexity that is involved in this step, it made sense to me that it should have its own module.</p>
+</section>
+<section id="module-rss.add_feed">
+<span id="add-feeds"></span><h2>Add Feeds<a class="headerlink" href="#module-rss.add_feed" title="Permalink to this heading">¶</a></h2>
+<p>Module to add feeds to the application.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.add_feed.add_feed">
+<span class="sig-prename descclassname"><span class="pre">rss.add_feed.</span></span><span class="sig-name descname"><span class="pre">add_feed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feeds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/add_feed.html#add_feed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.add_feed.add_feed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function is started with a string with an url or a list of urls.
+Each url is ran through <em>feedparser</em> to get the feed title.
+Creates a tuple of the feed title and its url. Adds it to the
+<em>feedlst.bin</em> file.</p>
+</dd></dl>
+
+</section>
+<section id="module-rss.delete_feed">
+<span id="delete-feeds"></span><h2>Delete Feeds<a class="headerlink" href="#module-rss.delete_feed" title="Permalink to this heading">¶</a></h2>
+<p>Module to delete feeds from the feed list.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.delete_feed.delete_feed">
+<span class="sig-prename descclassname"><span class="pre">rss.delete_feed.</span></span><span class="sig-name descname"><span class="pre">delete_feed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/delete_feed.html#delete_feed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.delete_feed.delete_feed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a feed or list of feeds to delete, builds new <em>feedlst.bin</em> file without them.</p>
+</dd></dl>
+
+</section>
+<section id="module-rss.update">
+<span id="update-feeds"></span><h2>Update Feeds<a class="headerlink" href="#module-rss.update" title="Permalink to this heading">¶</a></h2>
+<p>Module that deletes the database before updating it.
+We keep only the latest results in storage.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.update.delete_entries">
+<span class="sig-prename descclassname"><span class="pre">rss.update.</span></span><span class="sig-name descname"><span class="pre">delete_entries</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/update.html#delete_entries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.update.delete_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes all entries in the database. We only care about the
+latest content.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">rss</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.update.upload_feed">
+<span class="sig-prename descclassname"><span class="pre">rss.update.</span></span><span class="sig-name descname"><span class="pre">upload_feed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">answers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/update.html#upload_feed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.update.upload_feed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses all feeds and uploads them to the database.
+Uses multiprocessing to speed up the process.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">rss</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">link</span><span class="p">,</span><span class="w"> </span><span class="k">time</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="o">?</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-rss.choice_feeds">
+<span id="choose-feeds"></span><h2>Choose Feeds<a class="headerlink" href="#module-rss.choice_feeds" title="Permalink to this heading">¶</a></h2>
+<p>Updates, chooses and collects feed data, asked by the user.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.choice_feeds.update_query">
+<span class="sig-prename descclassname"><span class="pre">rss.choice_feeds.</span></span><span class="sig-name descname"><span class="pre">update_query</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/choice_feeds.html#update_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.choice_feeds.update_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asks the user if he wants to update the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Command<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Do you want to update the results?</p>
+</dd>
+<dt class="field-even">Command<span class="colon">:</span></dt>
+<dd class="field-even"><p>python update.py</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.choice_feeds.choose_feeds">
+<span class="sig-prename descclassname"><span class="pre">rss.choice_feeds.</span></span><span class="sig-name descname"><span class="pre">choose_feeds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/choice_feeds.html#choose_feeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.choice_feeds.choose_feeds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects entries in the <em>name</em> column and displays the results.
+The user can choose, one, many or all.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">rss</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Command<span class="colon">:</span></dt>
+<dd class="field-odd"><p>What feeds do you want to see?</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>feedschoice</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.choice_feeds.get_feeds">
+<span class="sig-prename descclassname"><span class="pre">rss.choice_feeds.</span></span><span class="sig-name descname"><span class="pre">get_feeds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/choice_feeds.html#get_feeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.choice_feeds.get_feeds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the feed information for the publications chosen
+in the last function. It has different queries in case
+its various feeds, one feed, all feeds.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">rss</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="o">&lt;</span><span class="n">choices</span><span class="o">&gt;</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">RANDOM</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">rss</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;{choices[0]}&#39;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">rss</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>records</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-rss.show_feeds">
+<span id="show-feeds"></span><h2>Show Feeds<a class="headerlink" href="#module-rss.show_feeds" title="Permalink to this heading">¶</a></h2>
+<p>Module to decorate the feed data and present it.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="rss.show_feeds.DecorateShowFeeds">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rss.show_feeds.</span></span><span class="sig-name descname"><span class="pre">DecorateShowFeeds</span></span><a class="reference internal" href="_modules/rss/show_feeds.html#DecorateShowFeeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.show_feeds.DecorateShowFeeds" title="Permalink to this definition">¶</a></dt>
+<dd><ol class="arabic simple">
+<li><p>Imports the data of chosen feeds.</p></li>
+<li><p>Defines color pallettes to decorate each feed.</p></li>
+<li><p>Alocates a pallette to a feed.</p></li>
+<li><p>Shows feeds in terminal.</p></li>
+</ol>
+<dl class="py method">
+<dt class="sig sig-object py" id="rss.show_feeds.DecorateShowFeeds.records">
+<span class="sig-name descname"><span class="pre">records</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/show_feeds.html#DecorateShowFeeds.records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.show_feeds.DecorateShowFeeds.records" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs <em>get_feeds</em> module to ask the user what information he wants to see.</p>
+<p>As <em>get_feeds</em> uses multiprocessing, it can’t be imported traditioanlly, so
+we call it, through <em>subprocess</em>, with a <em>python</em> command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Command<span class="colon">:</span></dt>
+<dd class="field-odd"><p>python get_feeds.py</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rss.show_feeds.DecorateShowFeeds.pallettes">
+<span class="sig-name descname"><span class="pre">pallettes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/show_feeds.html#DecorateShowFeeds.pallettes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.show_feeds.DecorateShowFeeds.pallettes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color pallettes to be atributed randomly to each chosen feed.
+Creates a list of pallettes that’ll be used in the next method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rss.show_feeds.DecorateShowFeeds.name_to_pallette">
+<span class="sig-name descname"><span class="pre">name_to_pallette</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/show_feeds.html#DecorateShowFeeds.name_to_pallette"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.show_feeds.DecorateShowFeeds.name_to_pallette" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a list of tuples with a chosen feed name and a pallette.</p>
+<p>We want different pallettes for each publication. For this we need to ensure
+that, everytime that ‘random’ chooses a new pallette, there is only unused
+pallettes as options. To do this, we pop the used options out of the list of
+choices. It creates a <em>self.name_pallette</em> list, with tuples with the feed
+name and the its pallette.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rss.show_feeds.DecorateShowFeeds.show_feeds">
+<span class="sig-name descname"><span class="pre">show_feeds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/show_feeds.html#DecorateShowFeeds.show_feeds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.show_feeds.DecorateShowFeeds.show_feeds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alocates pallette values to the feed content, using <em>Blessed</em> terminology.
+Shows the results.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-rss.main">
+<span id="main-module"></span><h2>Main Module<a class="headerlink" href="#module-rss.main" title="Permalink to this heading">¶</a></h2>
+<p>Main module of <em>rss</em>. Initiates the application.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="rss.main.main">
+<span class="sig-prename descclassname"><span class="pre">rss.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rss/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rss.main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects user input about:</p>
+<ol class="arabic simple">
+<li><p>What functionality to use.</p></li>
+<li><p>If it’s <em>delete feeds</em>, what feeds to delete?</p></li>
+<li><p>If it’s <em>add feeds</em>, what urls do you want to add?</p></li>
+<li><p>If it’s <em>show feeds</em>, what feeds do you want to see?</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Command<span class="colon">:</span></dt>
+<dd class="field-odd"><p>What do you want to do?</p>
+</dd>
+<dt class="field-even">Command<span class="colon">:</span></dt>
+<dd class="field-even"><p>What feeds do you want to delete?</p>
+</dd>
+<dt class="field-odd">Command<span class="colon">:</span></dt>
+<dd class="field-odd"><p>What feeds do you want to add?</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Modules</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#module-rss.add_feed">Add Feeds</a><ul>
+<li><a class="reference internal" href="#rss.add_feed.add_feed"><code class="docutils literal notranslate"><span class="pre">add_feed()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rss.delete_feed">Delete Feeds</a><ul>
+<li><a class="reference internal" href="#rss.delete_feed.delete_feed"><code class="docutils literal notranslate"><span class="pre">delete_feed()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rss.update">Update Feeds</a><ul>
+<li><a class="reference internal" href="#rss.update.delete_entries"><code class="docutils literal notranslate"><span class="pre">delete_entries()</span></code></a></li>
+<li><a class="reference internal" href="#rss.update.upload_feed"><code class="docutils literal notranslate"><span class="pre">upload_feed()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rss.choice_feeds">Choose Feeds</a><ul>
+<li><a class="reference internal" href="#rss.choice_feeds.update_query"><code class="docutils literal notranslate"><span class="pre">update_query()</span></code></a></li>
+<li><a class="reference internal" href="#rss.choice_feeds.choose_feeds"><code class="docutils literal notranslate"><span class="pre">choose_feeds()</span></code></a></li>
+<li><a class="reference internal" href="#rss.choice_feeds.get_feeds"><code class="docutils literal notranslate"><span class="pre">get_feeds()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rss.show_feeds">Show Feeds</a><ul>
+<li><a class="reference internal" href="#rss.show_feeds.DecorateShowFeeds"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds</span></code></a><ul>
+<li><a class="reference internal" href="#rss.show_feeds.DecorateShowFeeds.records"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.records()</span></code></a></li>
+<li><a class="reference internal" href="#rss.show_feeds.DecorateShowFeeds.pallettes"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.pallettes()</span></code></a></li>
+<li><a class="reference internal" href="#rss.show_feeds.DecorateShowFeeds.name_to_pallette"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.name_to_pallette()</span></code></a></li>
+<li><a class="reference internal" href="#rss.show_feeds.DecorateShowFeeds.show_feeds"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.show_feeds()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-rss.main">Main Module</a><ul>
+<li><a class="reference internal" href="#rss.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">RSS Documentation.</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/modules.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="RSS Documentation."
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RSS 6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Modules</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, mclds.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+    </div>
+  </body>
+</html>

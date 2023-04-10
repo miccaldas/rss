@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>RSS Documentation. &#8212; RSS 6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mrtools.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/micromodal.css" />
+    <script src="_static/jquery.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/hoverxref.js"></script>
+    <script src="_static/js/tooltipster.bundle.min.js"></script>
+    <script src="_static/js/micromodal.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modules" href="modules.html" /> 
+  </head><body>
+<div class="pageheader">
+  <ul>
+    <!-- <li><a href="#">Home</a></li>
+    <li><a href="usage/installation.html">Get it</a></li>
+    <li><a href="contents.html">Docs</a></li>
+    <li><a href="develop.html">Extend/Develop</a></li> -->
+  </ul>
+  <div>
+    
+    <h1 class="logo"><a href="#">RSS</a></h1>
+    
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">RSS 6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RSS Documentation.</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="rss-documentation">
+<h1>RSS Documentation.<a class="headerlink" href="#rss-documentation" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p>This is an updated version of an old RSS command line application that I wrote two years ago. For no other reason but thinking that, since then, I might’ve learned a thing or two, I set out to update this application. Turns out I didn’t had much to impart, in terms of new knowledge, to this project. Nevertheless, it is now simpler, with less modules and functionalities that I built and never used. The major changes were cosmetic, implementing code pallettes randomly to each feed. It’s a fun little thing. The rest is still <a class="reference external" href="https://feedparser.readthedocs.io/en/latest/">Feedparser</a> under the hood, so, no surprises there. It was a fun project updating it, even feeling that I didn’t do much, sometimes it’s the little things.</p>
+</section>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-rss.add_feed">Add Feeds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.add_feed.add_feed"><code class="docutils literal notranslate"><span class="pre">add_feed()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-rss.delete_feed">Delete Feeds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.delete_feed.delete_feed"><code class="docutils literal notranslate"><span class="pre">delete_feed()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-rss.update">Update Feeds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.update.delete_entries"><code class="docutils literal notranslate"><span class="pre">delete_entries()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.update.upload_feed"><code class="docutils literal notranslate"><span class="pre">upload_feed()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-rss.choice_feeds">Choose Feeds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.choice_feeds.update_query"><code class="docutils literal notranslate"><span class="pre">update_query()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.choice_feeds.choose_feeds"><code class="docutils literal notranslate"><span class="pre">choose_feeds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.choice_feeds.get_feeds"><code class="docutils literal notranslate"><span class="pre">get_feeds()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-rss.show_feeds">Show Feeds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.show_feeds.DecorateShowFeeds"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#rss.show_feeds.DecorateShowFeeds.records"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.records()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#rss.show_feeds.DecorateShowFeeds.pallettes"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.pallettes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#rss.show_feeds.DecorateShowFeeds.name_to_pallette"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.name_to_pallette()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#rss.show_feeds.DecorateShowFeeds.show_feeds"><code class="docutils literal notranslate"><span class="pre">DecorateShowFeeds.show_feeds()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-rss.main">Main Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#rss.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="external-dependencies">
+<h2>External Dependencies<a class="headerlink" href="#external-dependencies" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://feedparser.readthedocs.io/en/latest/">Feedparser</a></p></li>
+<li><p><a class="reference external" href="https://questionary.readthedocs.io/en/stable/index.html">Questionary</a></p></li>
+<li><p><a class="reference external" href="https://blessed.readthedocs.io/en/latest/">Blessed</a></p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">RSS Documentation.</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#external-dependencies">External Dependencies</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="modules.html"
+                          title="next chapter">Modules</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">RSS 6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RSS Documentation.</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, mclds.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+    </div>
+  </body>
+</html>

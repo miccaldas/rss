@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rss.choice_feeds &#8212; RSS 6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mrtools.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-shadow.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-punk.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-noir.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-light.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/tooltipster-sideTip-borderless.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/micromodal.css" />
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/hoverxref.js"></script>
+    <script src="../../_static/js/tooltipster.bundle.min.js"></script>
+    <script src="../../_static/js/micromodal.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+<div class="pageheader">
+  <ul>
+    <!-- <li><a href="../../index.html">Home</a></li>
+    <li><a href="../../usage/installation.html">Get it</a></li>
+    <li><a href="../../contents.html">Docs</a></li>
+    <li><a href="../../develop.html">Extend/Develop</a></li> -->
+  </ul>
+  <div>
+    
+    <h1 class="logo"><a href="../../index.html">RSS</a></h1>
+    
+  </div>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RSS 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rss.choice_feeds</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for rss.choice_feeds</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Updates, chooses and collects feed data, asked by the user.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="kn">import</span> <span class="nn">questionary</span>
+
+<span class="c1"># import snoop</span>
+<span class="kn">from</span> <span class="nn">questionary</span> <span class="kn">import</span> <span class="n">Separator</span><span class="p">,</span> <span class="n">Style</span>
+
+<span class="c1"># from snoop import pp</span>
+
+
+<span class="c1"># def type_watch(source, value):</span>
+<span class="c1">#     return &quot;type({})&quot;.format(source), type(value)</span>
+
+
+<span class="c1"># snoop.install(watch_extras=[type_watch])</span>
+
+<span class="n">custom_style_monitor</span> <span class="o">=</span> <span class="n">Style</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;qmark&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#FFACAC bold&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;question&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#FFBFA9 bold&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#FFEBB4&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;pointer&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#FBFFB1 bold&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;highlighted&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#CCD5AE bold&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;selected&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#E9EDC9 bold&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;separator&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#FEFAE0&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;instruction&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#E4CDA7&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;fg:#F8CBA6 bold&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+
+<span class="c1"># @snoop</span>
+<div class="viewcode-block" id="update_query"><a class="viewcode-back" href="../../modules.html#rss.choice_feeds.update_query">[docs]</a><span class="k">def</span> <span class="nf">update_query</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Asks the user if he wants to update the database.\n</span>
+<span class="sd">    :command: Do you want to update the results?</span>
+<span class="sd">    :command: python update.py</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">updt</span> <span class="o">=</span> <span class="n">questionary</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span>
+        <span class="n">qmark</span><span class="o">=</span><span class="s2">&quot;    [+]&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="n">custom_style_monitor</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="s2">&quot; Do you want to update the results?&quot;</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">updt</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;/usr/bin/python /home/mic/python/rss/rss/newrss/update.py&quot;</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<span class="c1"># @snoop</span>
+<div class="viewcode-block" id="choose_feeds"><a class="viewcode-back" href="../../modules.html#rss.choice_feeds.choose_feeds">[docs]</a><span class="k">def</span> <span class="nf">choose_feeds</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Selects entries in the *name* column and displays the results.</span>
+<span class="sd">    The user can choose, one, many or all.\n</span>
+<span class="sd">    .. code-block:: sql</span>
+
+<span class="sd">        SELECT DISTINCT name FROM rss</span>
+
+<span class="sd">    :command: What feeds do you want to see?</span>
+<span class="sd">    :returns: feedschoice</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sqlite3</span><span class="o">.</span><span class="n">enable_callback_tracebacks</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;rss.db&quot;</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT DISTINCT name FROM rss&quot;</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error connecting to the db&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">recs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">records</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">g</span><span class="p">]</span>
+    <span class="n">recs</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;-----------------------&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit&quot;</span><span class="p">]</span>
+
+    <span class="n">feedchoice</span> <span class="o">=</span> <span class="n">questionary</span><span class="o">.</span><span class="n">checkbox</span><span class="p">(</span>
+        <span class="n">message</span><span class="o">=</span><span class="s2">&quot; What feeds do you want to see?&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">recs</span><span class="p">,</span>
+        <span class="n">qmark</span><span class="o">=</span><span class="s2">&quot;    [+]&quot;</span><span class="p">,</span>
+        <span class="n">pointer</span><span class="o">=</span><span class="s2">&quot;   »»&quot;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="n">custom_style_monitor</span><span class="p">,</span>
+        <span class="n">initial_choice</span><span class="o">=</span><span class="s2">&quot;All&quot;</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ask</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">feedchoice</span></div>
+
+
+<span class="c1"># @snoop</span>
+<div class="viewcode-block" id="get_feeds"><a class="viewcode-back" href="../../modules.html#rss.choice_feeds.get_feeds">[docs]</a><span class="k">def</span> <span class="nf">get_feeds</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets the feed information for the publications chosen</span>
+<span class="sd">    in the last function. It has different queries in case</span>
+<span class="sd">    its various feeds, one feed, all feeds.\n</span>
+<span class="sd">    .. code-block:: sql</span>
+
+<span class="sd">        SELECT * FROM rss WHERE name IN &lt;choices&gt; ORDER BY RANDOM</span>
+<span class="sd">        SELECT * FROM rss WHERE name = &#39;{choices[0]}&#39;</span>
+<span class="sd">        SELECT * FROM rss</span>
+
+<span class="sd">    :returns: records</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_query</span><span class="p">()</span>
+    <span class="n">chcs</span> <span class="o">=</span> <span class="n">choose_feeds</span><span class="p">()</span>
+    <span class="n">choices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">chcs</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sqlite3</span><span class="o">.</span><span class="n">enable_callback_tracebacks</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;rss.db&quot;</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;All&quot;</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT name, title, link, time FROM rss&quot;</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Exit&quot;</span><span class="p">:</span>
+            <span class="c1"># Python was throwing an error whenever &#39;Exit&#39; was used. This silences it.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SystemExit</span>
+            <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;SELECT name, title, link, time FROM rss WHERE name IN </span><span class="si">{</span><span class="n">choices</span><span class="si">}</span><span class="s2"> ORDER BY RANDOM()&quot;</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit&quot;</span><span class="p">]:</span>
+                <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;SELECT name, title, link, time FROM rss WHERE name = &#39;</span><span class="si">{</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error connecting to the db&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">records</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">get_feeds</span><span class="p">()</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">RSS 6.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">rss.choice_feeds</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2023, mclds.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+    </div>
+  </body>
+</html>
